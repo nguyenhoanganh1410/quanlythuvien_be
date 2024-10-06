@@ -5,7 +5,7 @@ import { UpdateUserRoleDto } from './dto/update-user_role.dto';
 
 @Controller('user-roles')
 export class UserRolesController {
-  constructor(private readonly userRolesService: UserRolesService) {}
+  constructor(private readonly userRolesService: UserRolesService) { }
 
   @Post()
   create(@Body() createUserRoleDto: CreateUserRoleDto) {
@@ -15,20 +15,5 @@ export class UserRolesController {
   @Get()
   findAll() {
     return this.userRolesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userRolesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserRoleDto: UpdateUserRoleDto) {
-    return this.userRolesService.update(+id, updateUserRoleDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userRolesService.remove(+id);
   }
 }

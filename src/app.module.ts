@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { database_config } from './config/configuration.config';
+import { UserRolesModule } from '@modules/user_roles/user_roles.module';
+import { UsersModule } from '@modules/users/users.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from '@modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -12,15 +16,18 @@ import { database_config } from './config/configuration.config';
       load: [database_config],
       cache: true,
       expandVariables: true,
-      // validationSchema: Joi.object({
-      //   NODE_ENV: Joi.string()
-      //     .valid('development', 'production', 'test', 'provision', 'staging').default('development'),
-      //   PORT: Joi.number().default(3000),
-      // }),
-      // validationOptions: {
-      //   abortEarly: false,
-      // },
     }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI'),
+        dbName: configService.get<string>('DATABASE_NAME'),
+      }),
+      inject: [ConfigService],
+    }),
+    UserRolesModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
