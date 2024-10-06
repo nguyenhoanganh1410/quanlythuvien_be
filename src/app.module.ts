@@ -7,6 +7,7 @@ import { UserRolesModule } from '@modules/user_roles/user_roles.module';
 import { UsersModule } from '@modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from '@modules/auth/auth.module';
+import { BooksModule } from '@modules/books/books.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from '@modules/auth/auth.module';
     UserRolesModule,
     UsersModule,
     AuthModule,
+    BooksModule
   ],
   controllers: [AppController],
   providers: [AppService],

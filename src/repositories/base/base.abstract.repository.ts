@@ -52,7 +52,7 @@ export abstract class BaseRepositoryAbstract<T extends BaseEntity>
 
     async update(id: string, dto: Partial<T>): Promise<T> {
         return await this.model.findOneAndUpdate(
-            { id: id, deletedAt: null },
+            { _id: id, deletedAt: null },
             dto,
             { new: true },
         );

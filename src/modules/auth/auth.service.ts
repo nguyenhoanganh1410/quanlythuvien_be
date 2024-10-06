@@ -31,9 +31,7 @@ export class AuthService {
             );
             const user = await this.users_service.create({
                 ...sign_up_dto,
-                username: `${sign_up_dto.email.split('@')[0]}${Math.floor(
-                    10 + Math.random() * (999 - 10),
-                )}`,
+                username: sign_up_dto.email,
                 password: hashed_password,
             });
             return user;
